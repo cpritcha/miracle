@@ -131,13 +131,15 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'miracle_metadata',
         'USER': 'miracle',
-        'PASSWORD': '',
+        'HOST': get_env_variable('DB_HOST'),
+        'PASSWORD': get_env_variable('DB_PASS'),
     },
     'datasets': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'miracle_data',
         'USER': 'miracle',
-        'PASSWORD': '',
+        'HOST': get_env_variable('DB_HOST'),
+        'PASSWORD': get_env_variable('DB_PASS'),
     }
 }
 
@@ -296,3 +298,28 @@ SITE_ID = 1
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'miracle', 'static'),
 )
+
+# DeployR settings
+DEFAULT_DEPLOYR_USER = get_env_variable("DEPLOYR_USER")
+DEFAULT_DEPLOYR_PASSWORD = get_env_variable("DEPLOYR_PASS")
+DEPLOYR_URL = get_env_variable("DEPLOYR_URL")
+
+# Radiant settings
+# The url to link to the radiant frame with
+# In production this is the link that you need to connect to Radiant going through Nginx
+RADIANT_URL = get_env_variable("RADIANT_URL")
+
+# Make this unique, and don't share it with anybody.
+SECRET_KEY = get_env_variable("SECRET_KEY")
+
+SOCIAL_AUTH_FACEBOOK_KEY = get_env_variable("SOCIAL_AUTH_FACEBOOK_KEY")
+SOCIAL_AUTH_FACEBOOK_SECRET = get_env_variable("SOCIAL_AUTH_FACEBOOK_SECRET")
+
+SOCIAL_AUTH_TWITTER_KEY = get_env_variable("SOCIAL_AUTH_TWITTER_KEY")
+SOCIAL_AUTH_TWITTER_SECRET = get_env_variable("SOCIAL_AUTH_TWITTER_SECRET")
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = get_env_variable("SOCIAL_AUTH_GOOGLE_OAUTH2_KEY")
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = get_env_variable("SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET")
+
+SOCIAL_AUTH_GITHUB_KEY = get_env_variable("SOCIAL_AUTH_GITHUB_KEY")
+SOCIAL_AUTH_GITHUB_SECRET = get_env_variable("SOCIAL_AUTH_GITHUB_SECRET")

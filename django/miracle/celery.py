@@ -4,7 +4,7 @@ from django.conf import settings
 from celery import Celery
 import os
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'miracle.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'miracle.settings.prod')
 
 app = Celery('miracle',
              broker=settings.CELERY_BROKER_URL,

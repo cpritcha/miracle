@@ -1,0 +1,19 @@
+---
+# Development environment
+# In the Development build django and postgres live either on the host
+#  machine or in vagrant
+#
+# The project directory is shared between django, deployr and postgres
+deployr:
+  build: deployr
+  volumes:
+    - ./django/projects:/miracle/projects
+  ports:
+    - "7400:7400"
+
+radiant:
+  build: radiant
+  volumes:
+    - ./django/projects:/miracle/projects
+  ports:
+    - "3838:3838"

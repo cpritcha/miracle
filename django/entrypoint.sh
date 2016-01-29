@@ -2,15 +2,7 @@
 
 init() {
     python manage.py makemigrations
-    python manage.py migrate    
-    python manage.py shell <<EOF
-import os
-from miracle.core.models import User
-
-User.objects.create_user(username=os.environ['MIRACLE_USER'],
-                         password=os.environ['MIRACLE_PASS'],
-                         email=os.environ['MIRACLE_EMAIL'])
-EOF
+    python manage.py migrate
 }
 
 rundev() {

@@ -1,0 +1,63 @@
+---
+# Staging Environment
+# Separate from the host filesystem except for django directory
+#  to enable quick configuration changes
+
+deployr_data:
+  build: deployr
+  volumes:
+    - /home/miracle/deployr/7.4.1/deployr/database
+  command: ["echo", "starting deployr_data"]
+
+deployr:
+  build: deployr
+  volumes_from:
+    - deployr_data
+    - projects
+  ports:
+    - "7400:7400"
+
+radiant:
+  build: radiant
+  volumes_from:
+    - projects
+  ports:
+    - "3838:3838"
+
+db:
+  image: sameersbn/postgresql:9.4-11
+  ports:
+    - "5432:15432"
+  env_file:
+    - ./docker_config/base/db.env
+    - ./docker_config/staging/db.env
+  environment:
+    DB_NAME: 'miracle_data,miracle_metadata'
+
+projects:
+  build: django
+  volumes:
+    - /miracle/projects
+
+django:
+  build: django
+  volumes_from:
+    - projects
+  volumes:
+    - /miracle/packrat
+    - /miracle/archives
+    - /home/cpritcha/socket:/miracle/socket
+    - ./django:/code
+  command: ./entrypoint.sh prod
+  ports:
+    - "8000:8000"
+  env_file:
+    - ./docker_config/base/db.env
+    - ./docker_config/staging/db.env
+    - ./docker_config/base/django.env
+    - ./docker_config/staging/django.env
+    - ./docker_config/base/deployr.env
+  links:
+    - db
+    - deployr
+    - radiant
